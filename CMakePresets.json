@@ -3,7 +3,7 @@
   "configurePresets": [
     {
       "name": "gcc-arm",
-      "displayName": "GCC ARM (Cortex-M7)",
+      "displayName": "GCC ARM Toolchain (Cortex-M7)",
       "generator": "Ninja",
       "binaryDir": "build",
       "toolchainFile": "${sourceDir}/cmake/toolchain-gcc_cortex-m7.cmake"
