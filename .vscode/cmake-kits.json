@@ -1,6 +1,0 @@
-[
-  {
-    "name": "GCC-ARM (Cortec-M7)",
-    "toolchainFile": "${workspaceFolder}/cmake/toolchain-gcc_cortex-m7.cmake"
-  }
-]
