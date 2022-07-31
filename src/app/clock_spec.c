@@ -71,7 +71,7 @@ const  uint32_t Obj1A00_03_20 = CO_LINK(0x2100, 0x03,  8);
 static struct CO_OBJ_T ClockOD[APP_OBJ_N] = {
     {CO_KEY(0x1000, 0, CO_OBJ_____R_), CO_TUNSIGNED32, (CO_DATA)(&Obj1000_00_20)},
     {CO_KEY(0x1001, 0, CO_OBJ_____R_), CO_TUNSIGNED8 , (CO_DATA)(&Obj1001_00_08)},
-    {CO_KEY(0x1014, 0, CO_OBJ_____R_), CO_TEMCY_ID,    (CO_DATA)(&Obj1014_00_20)},
+    {CO_KEY(0x1014, 0, CO_OBJ__N__R_), CO_TEMCY_ID,    (CO_DATA)(&Obj1014_00_20)},
     {CO_KEY(0x1017, 0, CO_OBJ_____RW), CO_THB_PROD,    (CO_DATA)(&Obj1017_00_10)},
 
     {CO_KEY(0x1018, 0, CO_OBJ_D___R_), CO_TUNSIGNED8 , (CO_DATA)(4)             },
