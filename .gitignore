@@ -1,0 +1,11 @@
+#ignore
+build/*
+debug/*
+website/site/*
+.vscode/*
+
+#allow
+!.vscode/cmake-kits.json
+!.vscode/settings.json
+!.vscode/extensions.json
+!debug/quickstart.jdebug
