@@ -79,15 +79,18 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 function(setOutfile target filename)
   set_target_properties(${target} PROPERTIES OUTPUT_NAME "${filename}")
-  set(CMAKE_EXE_LINKER_FLAGS
-    "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Map,${filename}.map -Xlinker --cref"
-    CACHE STRING "" FORCE
+  target_link_options(${target}
+    PUBLIC
+      -Wl,-Map,${filename}.map
+      -Xlinker
+      --cref
+      -Wl,--print-memory-usage
   )
 endfunction()
 
 function(setLinkerScript target filename)
-  set(CMAKE_EXE_LINKER_FLAGS
-    "${CMAKE_EXE_LINKER_FLAGS} -T ${filename}.lds"
-    CACHE STRING "" FORCE
+  target_link_options(${target}
+    PUBLIC
+      -T ${filename}.lds
   )
 endfunction()

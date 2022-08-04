@@ -50,6 +50,6 @@ target_link_libraries(QuickstartApp Canopen Bsp)
 #---
 # specify the linker file and the resulting image
 #
-setLinkerScript(QuickstartApp ${CMAKE_CURRENT_SOURCE_DIR}/board/basic_flash)
+setLinkerScript(QuickstartApp "${CMAKE_CURRENT_SOURCE_DIR}/board/basic_flash")
 setOutfile(QuickstartApp "quickstart-app")
 set(CMAKE_EXECUTABLE_SUFFIX .elf)
