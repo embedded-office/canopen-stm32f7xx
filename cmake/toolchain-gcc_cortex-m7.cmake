@@ -79,9 +79,11 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 function(setOutfile target filename)
   set_target_properties(${target} PROPERTIES OUTPUT_NAME "${filename}")
+  set(CMAKE_EXECUTABLE_SUFFIX_C .elf CACHE STRING "")
+
   target_link_options(${target}
     PUBLIC
-      -Wl,-Map,${filename}.map
+      -Wl,-Map,$<TARGET_FILE_DIR:${target}>/${filename}.map
       -Xlinker
       --cref
       -Wl,--print-memory-usage
