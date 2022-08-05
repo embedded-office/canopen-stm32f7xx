@@ -78,12 +78,16 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 #* functions for application specific appending of mapfile and linker script
 
 function(setOutfile target filename)
+
+  # define the output image filename:
   set_target_properties(${target} PROPERTIES OUTPUT_NAME "${filename}")
   set(CMAKE_EXECUTABLE_SUFFIX_C .elf CACHE STRING "")
 
+  # place the mapfile with same base name and extension .map in
+  # same output directory:
   target_link_options(${target}
     PUBLIC
-      -Wl,-Map,$<TARGET_FILE_DIR:${target}>/${filename}.map
+      -Wl,-Map,$<TARGET_FILE_DIR:${target}>/$<TARGET_FILE_BASE_NAME:${target}>.map
       -Xlinker
       --cref
       -Wl,--print-memory-usage
@@ -91,6 +95,8 @@ function(setOutfile target filename)
 endfunction()
 
 function(setLinkerScript target filename)
+
+  # define the linker command file in linker options
   target_link_options(${target}
     PUBLIC
       -T ${filename}.lds
