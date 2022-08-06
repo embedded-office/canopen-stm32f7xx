@@ -52,3 +52,17 @@ target_link_libraries(QuickstartApp Canopen Bsp)
 #
 setLinkerScript(QuickstartApp "${CMAKE_CURRENT_SOURCE_DIR}/board/basic_flash")
 setOutfile(QuickstartApp "quickstart-app")
+
+#---
+# install binary artifacts to known output location
+#
+include(GNUInstallDirs)
+install(
+  TARGETS QuickstartApp
+  RUNTIME
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
+)
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/quickstart-app.map
+  DESTINATION ${CMAKE_INSTALL_PREFIX}
+)

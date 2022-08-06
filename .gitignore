@@ -1,5 +1,6 @@
 #ignore
 build/*
+out/*
 debug/*
 website/site/*
 .vscode/*

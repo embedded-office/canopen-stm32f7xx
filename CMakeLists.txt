@@ -17,7 +17,7 @@
 #---
 # preamble
 #
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.20)     # buildPresets is introduced in 3.20
 project(canopen-stm32f769 C ASM)
 
 #---

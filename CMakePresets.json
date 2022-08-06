@@ -6,7 +6,16 @@
       "displayName": "GCC ARM Toolchain (Cortex-M7)",
       "generator": "Ninja",
       "binaryDir": "build",
-      "toolchainFile": "${sourceDir}/cmake/toolchain-gcc_cortex-m7.cmake"
+      "toolchainFile": "cmake/toolchain-gcc_cortex-m7.cmake",
+      "installDir": "${sourceDir}/out"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "gcc-arm",
+      "displayName": "Build with debug information",
+      "targets": [ "install" ]
     }
   ]
 }

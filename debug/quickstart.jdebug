@@ -23,7 +23,6 @@ void OnProjectLoad (void) {
   // Dialog-generated settings
   //
   Project.AddPathSubstitute ("../", "$(ProjectDir)");
-  Project.AddPathSubstitute ("../", "$(ProjectDir)");
   Project.SetDevice ("STM32F769NI");
   Project.SetHostIF ("USB", "");
   Project.SetTargetIF ("SWD");
@@ -32,7 +31,7 @@ void OnProjectLoad (void) {
   //
   // User settings
   //
-  File.Open ("../build/src/quickstart-app.elf");
+  File.Open ("../out/quickstart-app.elf");
 }
 
 /*********************************************************************
