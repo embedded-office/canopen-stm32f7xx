@@ -18,7 +18,8 @@
 # preamble
 #
 cmake_minimum_required(VERSION 3.20)     # buildPresets is introduced in 3.20
-project(canopen-stm32f769 C ASM)
+project(canopen-stm32f769)
+enable_language(C ASM)
 
 #---
 # project wide setup

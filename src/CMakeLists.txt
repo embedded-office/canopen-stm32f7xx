@@ -54,9 +54,8 @@ setLinkerScript(QuickstartApp "${CMAKE_CURRENT_SOURCE_DIR}/board/basic_flash")
 setOutfile(QuickstartApp "quickstart-app")
 
 #---
-# install binary artifacts to known output location
+# install image and mapfile to known output location
 #
-include(GNUInstallDirs)
 install(
   TARGETS QuickstartApp
   RUNTIME
