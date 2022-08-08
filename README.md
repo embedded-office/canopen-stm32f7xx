@@ -22,9 +22,13 @@ The CANopen quickstart application for the STM32F769 discovery board.
 The application is build with CMake using the provided presets:
 
 ```bash
-# configure project build environment
+# configure the project for ARM target with GCC cross-compiler
 $ cmake --preset gcc-arm
+# or: re-configure the whole project from scratch (delete cache)
+$ cmake --preset gcc-arm --fresh
 
-# build the application
+# build the library and application for your target
 $ cmake --build --preset debug
+# or: clean and re-build the library and application
+$ cmake --build --preset debug --clean-first
 ```
