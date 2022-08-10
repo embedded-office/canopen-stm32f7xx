@@ -25,7 +25,7 @@ FetchContent_Declare(EXT_CANOPEN_STACK
 
 FetchContent_Declare(EXT_STM32CUBEF7
   GIT_REPOSITORY  git@github.com:embedded-office/STM32CubeF7.git
-  GIT_TAG         928730cf403ad2b905e826c30ef12f0478a4b75b
+  GIT_TAG         2b3b4c1dd93ff2fc12388f4367ab194bd8a7eac6
 )
 
 #---
