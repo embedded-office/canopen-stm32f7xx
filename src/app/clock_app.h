@@ -14,8 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef CLOCK_SPEC_H_
-#define CLOCK_SPEC_H_
+#ifndef CLOCK_APP_H_
+#define CLOCK_APP_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -25,28 +25,16 @@ extern "C" {
 * INCLUDES
 ******************************************************************************/
 
-#include "co_core.h"
+#include "clock_spec.h"
 
 /******************************************************************************
-* PUBLIC DEFINES
+* PUBLIC FUNCTIONS
 ******************************************************************************/
 
-/* Specify the EMCY-IDs for the application */
-enum EMCY_CODES {
-    APP_ERR_ID_SOMETHING = 0,
-    APP_ERR_ID_HOT,
-
-    APP_ERR_ID_NUM            /* number of EMCY error codes in application */
-};
-
-/******************************************************************************
-* PUBLIC SYMBOLS
-******************************************************************************/
-
-extern struct CO_NODE_SPEC_T AppSpec;
+void AppMain(void);
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
 #endif
 
-#endif /* CLOCK_SPEC_H_ */
+#endif /* CLOCK_APP_H_ */

@@ -17,38 +17,47 @@
 #---
 # define the application executable
 #
-add_executable(QuickstartApp)
+add_executable(canopen-stm32f769)
 
 #---
 # application with object dictionary and driver functions
 #
-target_sources(QuickstartApp
+target_sources(canopen-stm32f769
   PRIVATE
     # application
     app/clock_app.c
     app/clock_spec.c
-    # board
-    board/bsp_board.c
-    board/bsp_cfg.c
+    # board configuration
+    config/main.c
+    config/startup_stm32f769xx.s
+    config/stm32f7xx_hal_msp.c
+    config/stm32f7xx_it.c
+    config/system_stm32f7xx.c
     # driver
     driver/drv_can_dummy.c
     driver/drv_nvm_dummy.c
     driver/drv_timer_swcycle.c
   )
-target_include_directories(QuickstartApp
+target_include_directories(canopen-stm32f769
   PRIVATE
     app
-    board
+    config
     driver
 )
+
+# Configure the STM32F7xx-HAL for this project
+set(STM_USE_HAL_DRIVER      true                               CACHE BOOL   "")
+set(STM_USE_FULL_LL_DRIVER  true                               CACHE BOOL   "")
+set(STM_HAL_DEVICE          "STM32F769xx"                      CACHE STRING "")
+set(STM_HAL_CONF_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE PATH   "")
 
 #---
 # specify the dependencies for this application
 #
-target_link_libraries(QuickstartApp Canopen Bsp)
+target_link_libraries(canopen-stm32f769 canopen-stack stm32f7xx-hal)
 
 #---
 # specify the linker file and the resulting image
 #
-setLinkerScript(QuickstartApp "${CMAKE_CURRENT_SOURCE_DIR}/board/basic_flash")
-setOutfile(QuickstartApp "quickstart-app")
+setLinkerScript(canopen-stm32f769 "${CMAKE_CURRENT_SOURCE_DIR}/config/stm32f769i_discovery")
+setOutfile(canopen-stm32f769 "quickstart-app")

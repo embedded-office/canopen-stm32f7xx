@@ -18,17 +18,17 @@ include(FetchContent)
 #---
 # declare the dependency to external projects
 #
-FetchContent_Declare(Canopen
+FetchContent_Declare(EXT_CANOPEN_STACK
   GIT_REPOSITORY  git@github.com:embedded-office/canopen-stack.git
   GIT_TAG         develop-type-modules
 )
-FetchContent_Declare(Bsp
-  GIT_REPOSITORY  git@github.com:embedded-office/bsp-stm32f769.git
-  GIT_TAG         v2.1.3
+
+FetchContent_Declare(EXT_STM32CUBEF7
+  GIT_REPOSITORY  git@github.com:embedded-office/STM32CubeF7.git
+  GIT_TAG         928730cf403ad2b905e826c30ef12f0478a4b75b
 )
 
 #---
 # add external projects to the build
 #
-FetchContent_MakeAvailable(Canopen)
-FetchContent_MakeAvailable(Bsp)
+FetchContent_MakeAvailable(EXT_CANOPEN_STACK EXT_STM32CUBEF7)

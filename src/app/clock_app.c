@@ -18,8 +18,7 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "bsp_board.h"
-#include "clock_spec.h"
+#include "clock_app.h"
 
 /******************************************************************************
 * PRIVATE VARIABLES
@@ -33,11 +32,11 @@ static CO_NODE Clk;
 ******************************************************************************/
 
 /* time tick interrupt handler */
-static void App_TmrIsrHandler(void)
-{
-    /* collect elapsed timed actions */
-    COTmrService(&Clk.Tmr);
-}
+// static void App_TmrIsrHandler(void)
+// {
+//     /* collect elapsed timed actions */
+//     COTmrService(&Clk.Tmr);
+// }
 
 /* timer callback function */
 static void AppClock(void *p_arg)
@@ -93,20 +92,9 @@ static void AppClock(void *p_arg)
 * PUBLIC FUNCTIONS
 ******************************************************************************/
 
-/* main entry function */
-int main(void)
+void AppMain(void)
 {
     uint32_t ticks;
-
-    /* Initialize your hardware layer */
-    BSPLowInit();
-    BSPInit();
-
-    /* Setup a timer tick interrupt with the frequency
-     * which is defined in the AppSpec structure.
-     */
-    BSPTmrInstall(HW_TICKTMR, App_TmrIsrHandler);
-    BSPTmrStartFreq(HW_TICKTMR, AppSpec.TmrFreq);
 
     /* Initialize the CANopen stack. Stop execution if an
      * error is detected.
