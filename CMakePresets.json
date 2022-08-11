@@ -6,7 +6,10 @@
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "build/${presetName}",
-      "toolchainFile": "cmake/toolchain-gcc_cortex-m7.cmake"
+      "toolchainFile": "cmake/toolchain-gcc_cortex-m7.cmake",
+      "cacheVariables": {
+        "FETCHCONTENT_BASE_DIR": "build/_deps"
+      }
     },
     {
       "name": "debug",
