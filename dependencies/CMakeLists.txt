@@ -28,6 +28,12 @@ FetchContent_Declare(EXT_STM32CUBEF7
   GIT_TAG         924cc1b6e48c08738d25b89d21629d369613bb58
 )
 
+# Configure the STM32F7xx-HAL for this project
+set(STM_USE_HAL_DRIVER      true                           CACHE BOOL   "")
+set(STM_USE_FULL_LL_DRIVER  true                           CACHE BOOL   "")
+set(STM_HAL_DEVICE          "STM32F769xx"                  CACHE STRING "")
+set(STM_HAL_CONF_DIR        ${CMAKE_SOURCE_DIR}/src/config CACHE PATH   "")
+
 #---
 # add external projects to the build
 #

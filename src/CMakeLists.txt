@@ -45,12 +45,6 @@ target_include_directories(canopen-stm32f769
     driver
 )
 
-# Configure the STM32F7xx-HAL for this project
-set(STM_USE_HAL_DRIVER      true                               CACHE BOOL   "")
-set(STM_USE_FULL_LL_DRIVER  true                               CACHE BOOL   "")
-set(STM_HAL_DEVICE          "STM32F769xx"                      CACHE STRING "")
-set(STM_HAL_CONF_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/config CACHE PATH   "")
-
 #---
 # specify the dependencies for this application
 #
