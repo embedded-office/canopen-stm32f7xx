@@ -13,28 +13,25 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #******************************************************************************
-include(FetchContent)
 
 #---
 # declare the dependency to external projects
 #
-FetchContent_Declare(EXT_CANOPEN_STACK
-  GIT_REPOSITORY  git@github.com:embedded-office/canopen-stack.git
-  GIT_TAG         develop-type-modules
+CPMAddPackage(
+  NAME               canopen-stack
+  GITHUB_REPOSITORY  embedded-office/canopen-stack
+  VERSION            4.4.0
+  GIT_TAG            develop-type-modules
 )
 
-FetchContent_Declare(EXT_STM32CUBEF7
-  GIT_REPOSITORY  git@github.com:embedded-office/STM32CubeF7.git
-  GIT_TAG         924cc1b6e48c08738d25b89d21629d369613bb58
+CPMAddPackage(
+  NAME               stm32f7xx-hal
+  GITHUB_REPOSITORY  embedded-office/STM32CubeF7
+  VERSION            1.17.0
+  GIT_TAG            924cc1b6e48c08738d25b89d21629d369613bb58
+  OPTIONS
+    "STM_USE_HAL_DRIVER true"
+    "STM_USE_FULL_LL_DRIVER true"
+    "STM_HAL_DEVICE STM32F769xx"
+    "STM_HAL_CONF_DIR ${CMAKE_SOURCE_DIR}/src/config"
 )
-
-# Configure the STM32F7xx-HAL for this project
-set(STM_USE_HAL_DRIVER      true                           CACHE BOOL   "")
-set(STM_USE_FULL_LL_DRIVER  true                           CACHE BOOL   "")
-set(STM_HAL_DEVICE          "STM32F769xx"                  CACHE STRING "")
-set(STM_HAL_CONF_DIR        ${CMAKE_SOURCE_DIR}/src/config CACHE PATH   "")
-
-#---
-# add external projects to the build
-#
-FetchContent_MakeAvailable(EXT_CANOPEN_STACK EXT_STM32CUBEF7)

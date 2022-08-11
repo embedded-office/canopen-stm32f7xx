@@ -8,7 +8,7 @@
       "binaryDir": "build/${presetName}",
       "toolchainFile": "cmake/toolchain-gcc_cortex-m7.cmake",
       "cacheVariables": {
-        "FETCHCONTENT_BASE_DIR": "build/_deps"
+        "CPM_SOURCE_CACHE": "build/_deps"
       }
     },
     {

@@ -32,6 +32,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 #---
 # externally provided content
 #
+include(cmake/CPM.cmake)
 add_subdirectory(dependencies)
 
 #---
