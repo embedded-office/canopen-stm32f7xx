@@ -14,11 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-/* TODO: rename the include protection to match the naming convention: 
- *   CO_CAN_<device-name>_H_
- */
-#ifndef DRV_CAN_DUMMY_H_
-#define DRV_CAN_DUMMY_H_
+#ifndef DRV_CAN_STM32F769_H_
+#define DRV_CAN_STM32F769_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -34,10 +31,7 @@ extern "C" {
 * PUBLIC SYMBOLS
 ******************************************************************************/
 
-/* TODO: rename the extern variable declaration to match the naming convention:
- *   <device-name>CanDriver
- */
-extern const CO_IF_CAN_DRV DummyCanDriver;
+extern const CO_IF_CAN_DRV STM32F769CanDriver;
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }

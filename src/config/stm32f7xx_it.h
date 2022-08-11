@@ -1,34 +1,29 @@
-/**
-  ******************************************************************************
-  * @file    Templates/Inc/stm32f7xx_it.h
-  * @author  MCD Application Team
-  * @brief   This file contains the headers of the interrupt handlers.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+/******************************************************************************
+   Copyright 2020 Embedded Office GmbH & Co. KG
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32F7xx_IT_H
-#define __STM32F7xx_IT_H
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+******************************************************************************/
+
+#ifndef STM32F7XX_IT_H_
+#define STM32F7XX_IT_H_
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif 
 
-/* Includes ------------------------------------------------------------------*/
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+/******************************************************************************
+* PUBLIC FUNCTIONS
+******************************************************************************/
 
 void NMI_Handler(void);
 void HardFault_Handler(void);
@@ -44,4 +39,4 @@ void SysTick_Handler(void);
 }
 #endif
 
-#endif /* __STM32F7xx_IT_H */
+#endif /* STM32F7XX_IT_H_ */

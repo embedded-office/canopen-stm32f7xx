@@ -20,7 +20,7 @@
 
 #include "clock_spec.h"
                                               /* select application drivers: */
-#include "drv_can_dummy.h"                    /* CAN driver                  */
+#include "drv_can_stm32f769.h"                /* CAN driver                  */
 #include "drv_timer_swcycle.h"                /* Timer driver                */
 #include "drv_nvm_dummy.h"                    /* NVM driver                  */
 
@@ -117,7 +117,7 @@ static uint8_t SdoSrvMem[CO_SSDO_N * CO_SDO_BUF_BYTE];
  * your specific hardware functionality.
  */
 static struct CO_IF_DRV_T AppDriver = {
-    &DummyCanDriver,
+    &STM32F769CanDriver,
     &SwCycleTimerDriver,
     &DummyNvmDriver
 };

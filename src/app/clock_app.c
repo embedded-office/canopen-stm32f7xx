@@ -25,18 +25,11 @@
 ******************************************************************************/
 
 /* Allocate a global CANopen node object */
-static CO_NODE Clk;
+CO_NODE Clk;
 
 /******************************************************************************
 * PRIVATE FUNCTIONS
 ******************************************************************************/
-
-/* time tick interrupt handler */
-// static void App_TmrIsrHandler(void)
-// {
-//     /* collect elapsed timed actions */
-//     COTmrService(&Clk.Tmr);
-// }
 
 /* timer callback function */
 static void AppClock(void *p_arg)
@@ -121,7 +114,6 @@ void AppMain(void)
      * and executes elapsed action callback functions.
      */
     while (1) {
-        CONodeProcess(&Clk);
         COTmrProcess(&Clk.Tmr);
     }
 }

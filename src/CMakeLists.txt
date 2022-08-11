@@ -27,17 +27,17 @@ target_sources(canopen-stm32f769
     # application
     app/clock_app.c
     app/clock_spec.c
-    # board configuration
-    config/main.c
+    # system startup
+    config/startup_main.c
     config/startup_stm32f769xx.s
-    config/stm32f7xx_hal_msp.c
     config/stm32f7xx_it.c
     config/system_stm32f7xx.c
     # driver
-    driver/drv_can_dummy.c
+    driver/drv_can_stm32f769.c
     driver/drv_nvm_dummy.c
     driver/drv_timer_swcycle.c
-  )
+)
+
 target_include_directories(canopen-stm32f769
   PRIVATE
     app
