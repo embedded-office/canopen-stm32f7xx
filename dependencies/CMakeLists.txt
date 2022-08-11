@@ -15,6 +15,12 @@
 #******************************************************************************
 
 #---
+# Note: With the default presets, the downloaded components are cached in
+#       `/build/_deps`. You may add a `CMakeUserPresets.json` and set the
+#       variable `CPM_SOURCE_CACHE` to a location on your host for global
+#       component caching.
+
+#---
 # declare the dependency to external projects
 #
 CPMAddPackage(

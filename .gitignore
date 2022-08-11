@@ -7,4 +7,4 @@ website/site/*
 CMakeUserPresets.json
 
 #allow
-!debug/quickstart.jdebug
+!debug/*.jdebug
