@@ -2,19 +2,27 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "gcc-arm",
-      "displayName": "GCC-ARM (Cortex-M7)",
+      "name": "base",
+      "hidden": true,
       "generator": "Ninja",
-      "binaryDir": "build",
+      "binaryDir": "build/${presetName}",
       "toolchainFile": "cmake/toolchain-gcc_cortex-m7.cmake"
-    }
-  ],
-  "buildPresets": [
+    },
     {
       "name": "debug",
-      "configurePreset": "gcc-arm",
-      "displayName": "Debug Build",
-      "targets": [ "all" ]
+      "inherits": "base",
+      "displayName": "GCC-ARM (Cortex-M7) - Debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "displayName": "GCC-ARM (Cortex-M7) - Release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
     }
   ]
 }
