@@ -31,7 +31,7 @@ void OnProjectLoad (void) {
   //
   // User settings
   //
-  File.Open ("../out/quickstart-app.elf");
+  File.Open ("../out/debug/quickstart-app.elf");
 }
 
 /*********************************************************************
