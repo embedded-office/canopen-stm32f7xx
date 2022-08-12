@@ -41,11 +41,8 @@ void UsageFault_Handler(void) { while (1); }
 /* systick is configured to 1kHz */
 void SysTick_Handler(void)                  
 {
-    /* needed to get timouts in HAL  */
+    /* needed to handle timouts in HAL  */
     HAL_IncTick();
-
-    /* collect elapsed timed actions */
-    COTmrService(&Clk.Tmr);                 
 }
 
 /* ST HAL CAN receive callback */
@@ -55,4 +52,13 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     if (hcan->Instance == CAN1) {
         CONodeProcess(&Clk);
     };
+}
+
+/* ST HAL TIM5 overflow callback */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htmr)
+{
+    /* collect elapsed timed actions */
+    if (htmr->Instance == TIM5) {
+        COTmrService(&Clk.Tmr);
+    }
 }

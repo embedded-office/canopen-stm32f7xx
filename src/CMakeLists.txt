@@ -35,7 +35,7 @@ target_sources(canopen-stm32f769
     # driver
     driver/drv_can_stm32f769.c
     driver/drv_nvm_dummy.c
-    driver/drv_timer_swcycle.c
+    driver/drv_timer_stm32f769.c
 )
 
 target_include_directories(canopen-stm32f769

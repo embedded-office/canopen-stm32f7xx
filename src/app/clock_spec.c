@@ -21,7 +21,7 @@
 #include "clock_spec.h"
                                               /* select application drivers: */
 #include "drv_can_stm32f769.h"                /* CAN driver                  */
-#include "drv_timer_swcycle.h"                /* Timer driver                */
+#include "drv_timer_stm32f769.h"              /* Timer driver                */
 #include "drv_nvm_dummy.h"                    /* NVM driver                  */
 
 /******************************************************************************
@@ -32,7 +32,7 @@
 #define APP_NODE_ID       1u                  /* CANopen node ID             */
 #define APP_BAUDRATE      250000u             /* CAN baudrate                */
 #define APP_TMR_N         16u                 /* Number of software timers   */
-#define APP_TICKS_PER_SEC 1000u               /* Timer clock frequency in Hz */
+#define APP_TICKS_PER_SEC 1000000u            /* Timer clock frequency in Hz */
 #define APP_OBJ_N         128u                /* Object dictionary max size  */
 
 /******************************************************************************
@@ -118,7 +118,7 @@ static uint8_t SdoSrvMem[CO_SSDO_N * CO_SDO_BUF_BYTE];
  */
 static struct CO_IF_DRV_T AppDriver = {
     &STM32F769CanDriver,
-    &SwCycleTimerDriver,
+    &STM32F769TimerDriver,
     &DummyNvmDriver
 };
 
