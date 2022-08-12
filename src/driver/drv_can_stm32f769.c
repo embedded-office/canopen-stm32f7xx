@@ -129,11 +129,13 @@ static void DrvCanEnable(uint32_t baudrate)
     /* can controller mode */
     CanBus.Instance  = CAN1;
     CanBus.Init.Mode = CAN_MODE_NORMAL;
+
     /* baudrate settings */
     CanBus.Init.Prescaler     = BaudrateTbl[idx].Prescaler;
     CanBus.Init.SyncJumpWidth = BaudrateTbl[idx].SyncJumpWidth;
     CanBus.Init.TimeSeg1      = BaudrateTbl[idx].TimeSeg1;
     CanBus.Init.TimeSeg2      = BaudrateTbl[idx].TimeSeg2;
+
     /* feature select */
     CanBus.Init.TimeTriggeredMode    = DISABLE;
     CanBus.Init.AutoBusOff           = DISABLE;
@@ -151,8 +153,16 @@ static int16_t DrvCanSend(CO_IF_FRM *frm)
     CAN_TxHeaderTypeDef frmHead;
     uint32_t            mailbox;
 
-    frmHead.DLC   = frm->DLC;
+    /* RTR is not supported */
+    frmHead.RTR   = 0;
+
+    /* extended identifiers are not supported */
+    frmHead.ExtId = 0;
+    frmHead.IDE   = 0;
+
+    /* fill identifier, DLC and data payload in transmit buffer */
     frmHead.StdId = frm->Identifier;
+    frmHead.DLC   = frm->DLC;
     result = HAL_CAN_AddTxMessage(&CanBus, &frmHead, &frm->Data[0], &mailbox);
     if (result != HAL_OK) {
         return (-1);
