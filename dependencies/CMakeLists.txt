@@ -24,20 +24,20 @@
 # declare the dependency to external projects
 #
 CPMAddPackage(
-  NAME               canopen-stack
-  GITHUB_REPOSITORY  embedded-office/canopen-stack
-  VERSION            4.4.0
-  GIT_TAG            develop-type-modules
+  NAME              canopen-stack
+  GITHUB_REPOSITORY embedded-office/canopen-stack
+  VERSION           4.4.0
+  GIT_TAG           develop-type-modules
 )
 
 CPMAddPackage(
-  NAME               stm32f7xx-hal
-  GITHUB_REPOSITORY  embedded-office/STM32CubeF7
-  VERSION            1.17.0
-  GIT_TAG            924cc1b6e48c08738d25b89d21629d369613bb58
+  NAME    stm32f7xx-hal
+  URL     https://github.com/embedded-office/STM32CubeF7/releases/download/v1.17.0-p1/stm32f7xx-hal-src.zip
+  VERSION 1.17.0-p1
   OPTIONS
+    "STM_HAL_CONF_DIR ${CMAKE_SOURCE_DIR}/src/config"
+    "STM_HAL_DEVICE STM32F769xx"
     "STM_USE_HAL_DRIVER true"
     "STM_USE_FULL_LL_DRIVER true"
-    "STM_HAL_DEVICE STM32F769xx"
-    "STM_HAL_CONF_DIR ${CMAKE_SOURCE_DIR}/src/config"
+    "STM_USE_FULL_ASSERT false"
 )
