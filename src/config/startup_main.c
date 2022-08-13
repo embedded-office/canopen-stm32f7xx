@@ -32,15 +32,26 @@ static void SystemClock_Config(void);
 ******************************************************************************/
 
 void _init(void) {;}         /* stub function, called in __libc_init_array() */
-void HAL_MspDeInit(void) {;} /* ST HAL de-initialization callback, not used */
 
-void HAL_MspInit(void)       /* ST HAL initialization callback */
+HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)    /* Disable 1ms Tick */
+{
+    /* We can disable the regular 1ms time tick, because we use our timer
+     * driver to setup timer-actions with an accuracy of 1us.
+     *
+     * Unless we use one of the following HAL modules, the tick is unused:
+     * - hal_dsi, hal_eth, hal_mmc, hal_sd or ll_usb
+     */
+    (void)TickPriority;
+    return HAL_OK;
+}
+
+void HAL_MspInit(void)            /* ST HAL lowlevel initialization callback */
 {
     __HAL_RCC_PWR_CLK_ENABLE();
     __HAL_RCC_SYSCFG_CLK_ENABLE();
 }
 
-int main(void)               /* main entry point for controller startup */
+int main(void)                    /* main entry point for controller startup */
 {
     HAL_Init();
     SystemClock_Config();
@@ -50,7 +61,7 @@ int main(void)               /* main entry point for controller startup */
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOH_CLK_ENABLE();
 
-    AppMain();               /* ok, we are ready to start the application */
+    AppMain();                  /* ok, we are ready to start the application */
 }
 
 /******************************************************************************
