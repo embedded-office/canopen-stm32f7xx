@@ -15,14 +15,11 @@
 #******************************************************************************
 
 #---
-# Note: With the default presets, the downloaded components are cached in
-#       `/build/_deps`. You may add a `CMakeUserPresets.json` and set the
-#       variable `CPM_SOURCE_CACHE` to a location on your host for global
-#       component caching.
-
-#---
-# declare the dependency to external projects
+# Add the CANopen Stack project from Embedded Office
 #
+set(CO_TARGET   "canopen-stack")
+set(CO_PROJECT  "embedded-office/canopen-stack")
+set(CO_VERSION  "4.4.0")
 CPMAddPackage(
   NAME              canopen-stack
   GITHUB_REPOSITORY embedded-office/canopen-stack
@@ -30,13 +27,26 @@ CPMAddPackage(
   GIT_TAG           develop-type-modules
 )
 
+#---
+# Add the ST Microelectronics HAL drivers with some small patches
+# - to get a smaller package size
+# - eliminate compilation errors with -Wpedantic
+#
+set(HAL_TARGET   "stm32f7xx-hal")
+set(HAL_PROJECT  "embedded-office/STM32CubeF7")
+set(HAL_VERSION  "1.17.0-p1")
+#
+# configure component build for:
+#
+set(HAL_DEVICE   "STM32F769xx")
+set(HAL_CONFIG   "${CMAKE_SOURCE_DIR}/src/config")
 CPMAddPackage(
-  NAME    stm32f7xx-hal
-  URL     https://github.com/embedded-office/STM32CubeF7/releases/download/v1.17.0-p1/stm32f7xx-hal-src.zip
-  VERSION 1.17.0-p1
+  NAME    ${HAL_TARGET}
+  URL     https://github.com/${HAL_PROJECT}/releases/download/v${HAL_VERSION}/${HAL_TARGET}-src.zip
+  VERSION ${HAL_VERSION}
   OPTIONS
-    "STM_HAL_CONF_DIR ${CMAKE_SOURCE_DIR}/src/config"
-    "STM_HAL_DEVICE STM32F769xx"
+    "STM_HAL_CONF_DIR ${HAL_CONFIG}"
+    "STM_HAL_DEVICE ${HAL_DEVICE}"
     "STM_USE_HAL_DRIVER true"
     "STM_USE_FULL_LL_DRIVER true"
     "STM_USE_FULL_ASSERT false"
