@@ -68,28 +68,6 @@ SECTIONS {
         _ecanopen = .;
     } > core_rom
 
-    .bsp : {
-        . = ALIGN(4);
-        startup_*.obj(.text)
-        startup_*.obj(.text.*)
-        bsp_*.obj(.text)
-        bsp_*.obj(.text.*)
-        . = ALIGN(4);
-        bsp_*.obj(.rodata)
-        bsp_*.obj(.rodata*)
-        _ebsp = .;
-    } > core_rom
-
-    .app : {
-        . = ALIGN(4);
-        */app/*.obj(.text)
-        */app/*.obj(.text.*)
-        . = ALIGN(4);
-        */app/*.obj(.rodata)
-        */app/*.obj(.rodata*)
-        _eapp = .;
-    } > core_rom
-
     .text : {
         CREATE_OBJECT_SYMBOLS
         . = ALIGN(4);
@@ -173,9 +151,6 @@ SECTIONS {
         	__bss_end__ = _ebss;
     } > core_ram_1
 
-    /*--------------------------------------------------------------------------------------------*
-     *  Protected Variables:
-     *--------------------------------------------------------------------------------------------*/
     .stack (NOLOAD) : {
         . = ALIGN(8);
         . = . + _Min_Heap_Size;
