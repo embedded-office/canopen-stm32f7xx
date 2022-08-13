@@ -26,11 +26,11 @@ target_sources(canopen-stm32f7xx
   PRIVATE
     # application
     app/clock_app.c
+    app/clock_hw.c
     app/clock_spec.c
     # system startup
     config/startup_main.c
     config/startup_stm32f769xx.s
-    config/stm32f7xx_it.c
     config/system_stm32f7xx.c
     # driver
     driver/drv_can_stm32f7xx.c

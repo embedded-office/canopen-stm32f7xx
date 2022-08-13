@@ -14,29 +14,32 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef STM32F7XX_IT_H_
-#define STM32F7XX_IT_H_
+#ifndef CLOCK_HW_H_
+#define CLOCK_HW_H_
 
-#ifdef __cplusplus
+#ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
-#endif 
+#endif
 
 /******************************************************************************
-* PUBLIC FUNCTIONS
+* INCLUDES
 ******************************************************************************/
 
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void SVC_Handler(void);
-void DebugMon_Handler(void);
-void PendSV_Handler(void);
-void SysTick_Handler(void);
+#include "stm32f7xx_hal.h"                    /* for connecting interrupts   */
 
-#ifdef __cplusplus
+                                              /* select application drivers: */
+#include "drv_can_stm32f7xx.h"                /* CAN driver                  */
+#include "drv_timer_stm32f7xx.h"              /* Timer driver                */
+#include "drv_nvm_dummy.h"                    /* NVM driver                  */
+
+/******************************************************************************
+* PUBLIC SYMBOLS
+******************************************************************************/
+
+extern struct CO_IF_DRV_T AppDriver;
+
+#ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
 #endif
 
-#endif /* STM32F7XX_IT_H_ */
+#endif /* CLOCK_HW_H_ */

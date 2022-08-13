@@ -18,34 +18,27 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "stm32f7xx_hal.h"
-#include "stm32f7xx_it.h"
+#include "clock_hw.h"
 #include "clock_app.h"
+
+/******************************************************************************
+* PUBLIC VARIABLES
+******************************************************************************/
+
+/* Select the drivers for your application. For possible
+ * selections, see the directory /drivers.
+ */
+struct CO_IF_DRV_T AppDriver = {
+    &STM32F7xxCanDriver,
+    &STM32F7xxTimerDriver,
+    &DummyNvmDriver
+};
 
 /******************************************************************************
 * PUBLIC FUNCTIONS
 ******************************************************************************/
 
-/* handlers not used */
-void NMI_Handler(void) {;}
-void SVC_Handler(void) {;}
-void DebugMon_Handler(void) {;}
-void PendSV_Handler(void) {;}
-
-/* errors not handled */
-void HardFault_Handler(void) { while (1); }
-void MemManage_Handler(void) { while (1); }
-void BusFault_Handler(void) { while (1); }
-void UsageFault_Handler(void) { while (1); }
-
-/* systick is configured to 1kHz */
-void SysTick_Handler(void)                  
-{
-    /* needed to handle timouts in HAL  */
-    HAL_IncTick();
-}
-
-/* ST HAL CAN receive callback */
+/* ST HAL CAN receive interrupt callback */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     /* process CAN frame with CANopen protocol */
@@ -54,7 +47,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     };
 }
 
-/* ST HAL TIM5 overflow callback */
+/* ST HAL TIM5 overflow interrupt callback */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htmr)
 {
     /* collect elapsed timed actions */

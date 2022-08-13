@@ -19,10 +19,7 @@
 ******************************************************************************/
 
 #include "clock_spec.h"
-                                              /* select application drivers: */
-#include "drv_can_stm32f7xx.h"                /* CAN driver                  */
-#include "drv_timer_stm32f7xx.h"              /* Timer driver                */
-#include "drv_nvm_dummy.h"                    /* NVM driver                  */
+#include "clock_hw.h"
 
 /******************************************************************************
 * PRIVATE DEFINES
@@ -110,17 +107,6 @@ static CO_TMR_MEM TmrMem[APP_TMR_N];
  * block transfer requests.
  */
 static uint8_t SdoSrvMem[CO_SSDO_N * CO_SDO_BUF_BYTE];
-
-/* Select the drivers for your application. For possible
- * selections, see the directory /drivers. In this example
- * we select the driver templates. You may fill them with
- * your specific hardware functionality.
- */
-static struct CO_IF_DRV_T AppDriver = {
-    &STM32F7xxCanDriver,
-    &STM32F7xxTimerDriver,
-    &DummyNvmDriver
-};
 
 /* Specify the EMCY error codes with the corresponding
  * error register bit. There is a collection of defines
