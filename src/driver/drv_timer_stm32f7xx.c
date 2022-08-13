@@ -18,7 +18,7 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "drv_timer_stm32f769.h"
+#include "drv_timer_stm32f7xx.h"
 #include "stm32f7xx_hal.h"
 
 /******************************************************************************
@@ -42,7 +42,7 @@ static void     DrvTimerStop   (void);
 * PUBLIC VARIABLE
 ******************************************************************************/
 
-const CO_IF_TIMER_DRV STM32F769TimerDriver = {
+const CO_IF_TIMER_DRV STM32F7xxTimerDriver = {
     DrvTimerInit,
     DrvTimerReload,
     DrvTimerDelay,

@@ -17,12 +17,12 @@
 #---
 # define the application executable
 #
-add_executable(canopen-stm32f769)
+add_executable(canopen-stm32f7xx)
 
 #---
 # application with object dictionary and driver functions
 #
-target_sources(canopen-stm32f769
+target_sources(canopen-stm32f7xx
   PRIVATE
     # application
     app/clock_app.c
@@ -33,12 +33,12 @@ target_sources(canopen-stm32f769
     config/stm32f7xx_it.c
     config/system_stm32f7xx.c
     # driver
-    driver/drv_can_stm32f769.c
+    driver/drv_can_stm32f7xx.c
     driver/drv_nvm_dummy.c
-    driver/drv_timer_stm32f769.c
+    driver/drv_timer_stm32f7xx.c
 )
 
-target_include_directories(canopen-stm32f769
+target_include_directories(canopen-stm32f7xx
   PRIVATE
     app
     config
@@ -48,10 +48,10 @@ target_include_directories(canopen-stm32f769
 #---
 # specify the dependencies for this application
 #
-target_link_libraries(canopen-stm32f769 canopen-stack stm32f7xx-hal)
+target_link_libraries(canopen-stm32f7xx canopen-stack stm32f7xx-hal)
 
 #---
 # specify the linker file and the resulting image
 #
-setLinkerScript(canopen-stm32f769 "${CMAKE_CURRENT_SOURCE_DIR}/config/stm32f769i_discovery")
-setOutfile(canopen-stm32f769 "quickstart-app")
+setLinkerScript(canopen-stm32f7xx "${CMAKE_CURRENT_SOURCE_DIR}/config/stm32f769i_discovery")
+setOutfile(canopen-stm32f7xx "quickstart-app")
