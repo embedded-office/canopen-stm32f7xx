@@ -31,14 +31,18 @@ typedef struct BAUDRATE_TBL_T {
     uint32_t SyncJumpWidth;
     uint32_t TimeSeg1;
     uint32_t TimeSeg2;
-
 } BAUDRATE_TBL;
+
+typedef struct PIN_ASSIGN_T {
+    GPIO_TypeDef *Port;
+    uint16_t      Pin; 
+} PIN_ASSIGN;
 
 /******************************************************************************
 * PRIVATE VARIABLES
 ******************************************************************************/
 
-CAN_HandleTypeDef CanBus;
+static CAN_HandleTypeDef DrvCan;
 
 /******************************************************************************
 * PRIVATE FUNCTIONS
@@ -76,6 +80,31 @@ BAUDRATE_TBL BaudrateTbl[] = {
     { 0, 0, 0, 0, 0 }
 };
 
+/* CAN1 Pin assignments are valid for: 
+ *   STM32F722xx, STM32F723xx, STM32F730x8, STM32F732xx, STM32F733xx, STM32F745xx,
+ *   STM32F746xx, STM32F750x8, STM32F756xx, STM32F765xx, STM32F767xx, STM32F768Ax,
+ *   STM32F769xx, STM32F777xx, STM32F778Ax, STM32F779xx
+ * 
+ *   PH14 not for: STM32F750x8, STM32F745xx, STM32F746xx
+ */
+PIN_ASSIGN CanPin_Rx[] = {
+    { GPIOA, GPIO_PIN_11 },  /* #0: PA11 */ 
+    { GPIOB, GPIO_PIN_8  },  /* #1: PB8  */ 
+    { GPIOD, GPIO_PIN_0  },  /* #2: PD0  */ 
+    { GPIOH, GPIO_PIN_14 },  /* #3: PH14 */
+    { GPIOI, GPIO_PIN_9  }   /* #4: PI9  */
+};
+PIN_ASSIGN CanPin_Tx[] = {
+    { GPIOA, GPIO_PIN_12 },  /* #0: PA12 */
+    { GPIOB, GPIO_PIN_9  },  /* #2: PB9  */
+    { GPIOD, GPIO_PIN_1  },  /* #3: PD1  */
+    { GPIOH, GPIO_PIN_13 }   /* #4: PH13 */
+};
+
+/* default: CAN_RX -> PB8, CAN_TX -> PB9 */
+#define CAN_PIN_RX_SEL  1
+#define CAN_PIN_TX_SEL  1
+
 /******************************************************************************
 * PUBLIC FUNCTIONS
 ******************************************************************************/
@@ -83,7 +112,7 @@ BAUDRATE_TBL BaudrateTbl[] = {
 /* ST HAL CAN Receive Interrupt Handler */
 void CAN1_RX0_IRQHandler(void)
 {
-    HAL_CAN_IRQHandler(&CanBus);
+    HAL_CAN_IRQHandler(&DrvCan);
 }
 
 /******************************************************************************
@@ -94,17 +123,23 @@ static void DrvCanInit(void)
 {
     GPIO_InitTypeDef gpio = {0};
 
-    /* Peripheral clocks enable */
+    /* Peripheral clocks enable (for simplicity, enable all possible ports) */
     __HAL_RCC_CAN1_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+    __HAL_RCC_GPIOI_CLK_ENABLE();
 
-    /* CAN1 GPIO Config: PB8 -> CAN1_RX, PB9 -> CAN1_TX */
-    gpio.Pin       = GPIO_PIN_8|GPIO_PIN_9;
+    /* setup CAN RX and TX pins */
     gpio.Mode      = GPIO_MODE_AF_PP;
     gpio.Pull      = GPIO_NOPULL;
     gpio.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
     gpio.Alternate = GPIO_AF9_CAN1;
-    HAL_GPIO_Init(GPIOB, &gpio);
+    gpio.Pin       = CanPin_Rx[CAN_PIN_RX_SEL].Pin;
+    HAL_GPIO_Init(CanPin_Rx[CAN_PIN_RX_SEL].Port, &gpio);
+    gpio.Pin       = CanPin_Tx[CAN_PIN_TX_SEL].Pin;
+    HAL_GPIO_Init(CanPin_Tx[CAN_PIN_TX_SEL].Port, &gpio);
 
     /* CAN1 interrupt Init */
     HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 0, 0);
@@ -127,24 +162,24 @@ static void DrvCanEnable(uint32_t baudrate)
     }
 
     /* can controller mode */
-    CanBus.Instance  = CAN1;
-    CanBus.Init.Mode = CAN_MODE_NORMAL;
+    DrvCan.Instance  = CAN1;
+    DrvCan.Init.Mode = CAN_MODE_NORMAL;
 
     /* baudrate settings */
-    CanBus.Init.Prescaler     = BaudrateTbl[idx].Prescaler;
-    CanBus.Init.SyncJumpWidth = BaudrateTbl[idx].SyncJumpWidth;
-    CanBus.Init.TimeSeg1      = BaudrateTbl[idx].TimeSeg1;
-    CanBus.Init.TimeSeg2      = BaudrateTbl[idx].TimeSeg2;
+    DrvCan.Init.Prescaler     = BaudrateTbl[idx].Prescaler;
+    DrvCan.Init.SyncJumpWidth = BaudrateTbl[idx].SyncJumpWidth;
+    DrvCan.Init.TimeSeg1      = BaudrateTbl[idx].TimeSeg1;
+    DrvCan.Init.TimeSeg2      = BaudrateTbl[idx].TimeSeg2;
 
     /* feature select */
-    CanBus.Init.TimeTriggeredMode    = DISABLE;
-    CanBus.Init.AutoBusOff           = DISABLE;
-    CanBus.Init.AutoWakeUp           = DISABLE;
-    CanBus.Init.AutoRetransmission   = DISABLE;
-    CanBus.Init.ReceiveFifoLocked    = DISABLE;
-    CanBus.Init.TransmitFifoPriority = DISABLE;
-    HAL_CAN_Init(&CanBus);
-    HAL_CAN_Start(&CanBus);
+    DrvCan.Init.TimeTriggeredMode    = DISABLE;
+    DrvCan.Init.AutoBusOff           = DISABLE;
+    DrvCan.Init.AutoWakeUp           = DISABLE;
+    DrvCan.Init.AutoRetransmission   = DISABLE;
+    DrvCan.Init.ReceiveFifoLocked    = DISABLE;
+    DrvCan.Init.TransmitFifoPriority = DISABLE;
+    HAL_CAN_Init(&DrvCan);
+    HAL_CAN_Start(&DrvCan);
 }
 
 static int16_t DrvCanSend(CO_IF_FRM *frm)
@@ -163,7 +198,7 @@ static int16_t DrvCanSend(CO_IF_FRM *frm)
     /* fill identifier, DLC and data payload in transmit buffer */
     frmHead.StdId = frm->Identifier;
     frmHead.DLC   = frm->DLC;
-    result = HAL_CAN_AddTxMessage(&CanBus, &frmHead, &frm->Data[0], &mailbox);
+    result = HAL_CAN_AddTxMessage(&DrvCan, &frmHead, &frm->Data[0], &mailbox);
     if (result != HAL_OK) {
         return (-1);
     }
@@ -177,7 +212,7 @@ static int16_t DrvCanRead (CO_IF_FRM *frm)
     uint8_t frmData[8] = { 0 };
     uint8_t n;
 
-    err = HAL_CAN_GetRxMessage(&CanBus, CAN_RX_FIFO0, &frmHead, &frmData[0]);
+    err = HAL_CAN_GetRxMessage(&DrvCan, CAN_RX_FIFO0, &frmHead, &frmData[0]);
     if (err != HAL_OK) {
         return (-1);
     }
@@ -193,11 +228,11 @@ static int16_t DrvCanRead (CO_IF_FRM *frm)
 
 static void DrvCanReset(void)
 {
-    HAL_CAN_Init(&CanBus);
-    HAL_CAN_Start(&CanBus);
+    HAL_CAN_Init(&DrvCan);
+    HAL_CAN_Start(&DrvCan);
 }
 
 static void DrvCanClose(void)
 {
-    HAL_CAN_Stop(&CanBus);
+    HAL_CAN_Stop(&DrvCan);
 }
