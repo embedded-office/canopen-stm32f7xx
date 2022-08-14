@@ -18,14 +18,14 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "drv_timer_stm32f7xx.h"
+#include "drv_timer2_stm32f7xx.h"
 #include "stm32f7xx_hal.h"
 
 /******************************************************************************
 * PRIVATE VARIABLES
 ******************************************************************************/
 
-static TIM_HandleTypeDef DrvTimer;
+static TIM_HandleTypeDef DrvTimer2;
 
 /******************************************************************************
 * PRIVATE FUNCTIONS
@@ -42,7 +42,7 @@ static void     DrvTimerStop   (void);
 * PUBLIC VARIABLE
 ******************************************************************************/
 
-const CO_IF_TIMER_DRV STM32F7xxTimerDriver = {
+const CO_IF_TIMER_DRV STM32F7xxTimer2Driver = {
     DrvTimerInit,
     DrvTimerReload,
     DrvTimerDelay,
@@ -55,10 +55,10 @@ const CO_IF_TIMER_DRV STM32F7xxTimerDriver = {
 * PUBLIC FUNCTIONS
 ******************************************************************************/
 
-/* ST HAL Timer5 Interrupt Handler */
-void TIM5_IRQHandler(void)
+/* ST HAL Timer2 Interrupt Handler */
+void TIM2_IRQHandler(void)
 {
-    HAL_TIM_IRQHandler(&DrvTimer);
+    HAL_TIM_IRQHandler(&DrvTimer2);
 }
 
 /******************************************************************************
@@ -68,7 +68,7 @@ void TIM5_IRQHandler(void)
 static void DrvTimerInit(uint32_t freq)
 {
     /* For simplicity, we implement a fixed frequency of 1MHz:
-       - the input frequency TIM5_CLK is: 108 MHz
+       - the input frequency TIM2_CLK is: 108 MHz
        - with a prescaler of: 108, we get a counting frequency of: 1MHz
        - in other words we get a tick every: dt = 1us
        - with the timer width 32bit we get: max. time = 4294s (1h 11min 34s)
@@ -76,7 +76,7 @@ static void DrvTimerInit(uint32_t freq)
     (void)freq;
 
     /* Peripheral clocks enable */
-    __HAL_RCC_TIM5_CLK_ENABLE();
+    __HAL_RCC_TIM2_CLK_ENABLE();
 
     TIM_ClockConfigTypeDef sClockSourceConfig = {0};
     TIM_MasterConfigTypeDef sMasterConfig = {0};
@@ -85,37 +85,37 @@ static void DrvTimerInit(uint32_t freq)
      * with overflow interrupt at given (unbuffered) autoreload register
      * (note: the timer reloads to 0 on this overflow)
      */
-    DrvTimer.Instance = TIM5;
-    DrvTimer.Init.Prescaler = 108;
-    DrvTimer.Init.CounterMode = TIM_COUNTERMODE_UP;
-    DrvTimer.Init.Period = 4294967295;
-    DrvTimer.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    DrvTimer.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_Base_Init(&DrvTimer) != HAL_OK) {
+    DrvTimer2.Instance = TIM2;
+    DrvTimer2.Init.Prescaler = 108;
+    DrvTimer2.Init.CounterMode = TIM_COUNTERMODE_UP;
+    DrvTimer2.Init.Period = 4294967295;
+    DrvTimer2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    DrvTimer2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    if (HAL_TIM_Base_Init(&DrvTimer2) != HAL_OK) {
         while(1);    /* error not handled */
     }
     sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-    if (HAL_TIM_ConfigClockSource(&DrvTimer, &sClockSourceConfig) != HAL_OK) {
+    if (HAL_TIM_ConfigClockSource(&DrvTimer2, &sClockSourceConfig) != HAL_OK) {
         while(1);    /* error not handled */
     }
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&DrvTimer, &sMasterConfig) != HAL_OK) {
+    if (HAL_TIMEx_MasterConfigSynchronization(&DrvTimer2, &sMasterConfig) != HAL_OK) {
         while(1);    /* error not handled */
     }
 
     /* clear pending update interrupt */
-    __HAL_TIM_CLEAR_FLAG(&DrvTimer, TIM_FLAG_UPDATE);
+    __HAL_TIM_CLEAR_FLAG(&DrvTimer2, TIM_FLAG_UPDATE);
 
     /* enable TIM5 interrupts */
-    HAL_NVIC_SetPriority(TIM5_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM5_IRQn);
+    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
 }
 
 static void DrvTimerStart(void)
 {
     /* start the hardware timer counting */
-    HAL_TIM_Base_Start_IT(&DrvTimer);
+    HAL_TIM_Base_Start_IT(&DrvTimer2);
 }
 
 static uint8_t DrvTimerUpdate(void)
@@ -126,8 +126,8 @@ static uint8_t DrvTimerUpdate(void)
 
 static uint32_t DrvTimerDelay(void)
 {
-    uint32_t current = __HAL_TIM_GET_COUNTER(&DrvTimer);
-    uint32_t reload = __HAL_TIM_GET_AUTORELOAD(&DrvTimer);
+    uint32_t current = __HAL_TIM_GET_COUNTER(&DrvTimer2);
+    uint32_t reload = __HAL_TIM_GET_AUTORELOAD(&DrvTimer2);
 
     /* return remaining ticks until interrupt occurs */
     return (reload - current);
@@ -136,11 +136,11 @@ static uint32_t DrvTimerDelay(void)
 static void DrvTimerReload(uint32_t reload)
 {
     /* configure the next hardware timer interrupt */
-    __HAL_TIM_SET_AUTORELOAD(&DrvTimer, reload);
+    __HAL_TIM_SET_AUTORELOAD(&DrvTimer2, reload);
 }
 
 static void DrvTimerStop(void)
 {
     /* stop the hardware timer counting */
-    HAL_TIM_Base_Stop_IT(&DrvTimer);
+    HAL_TIM_Base_Stop_IT(&DrvTimer2);
 }

@@ -28,8 +28,8 @@ extern "C" {
 #include "stm32f7xx_hal.h"                    /* for connecting interrupts   */
 
                                               /* select application drivers: */
-#include "drv_can_stm32f7xx.h"                /* CAN driver                  */
-#include "drv_timer_stm32f7xx.h"              /* Timer driver                */
+#include "drv_can1_stm32f7xx.h"               /* CAN driver (CAN1)           */
+#include "drv_timer5_stm32f7xx.h"             /* Timer driver (TIM5)         */
 #include "drv_nvm_dummy.h"                    /* NVM driver                  */
 
 /******************************************************************************

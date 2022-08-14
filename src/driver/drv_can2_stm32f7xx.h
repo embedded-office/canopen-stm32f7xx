@@ -14,8 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef DRV_CAN_STM32F7XX_H_
-#define DRV_CAN_STM32F7XX_H_
+#ifndef DRV_CAN2_STM32F7XX_H_
+#define DRV_CAN2_STM32F7XX_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -31,7 +31,7 @@ extern "C" {
 * PUBLIC SYMBOLS
 ******************************************************************************/
 
-extern const CO_IF_CAN_DRV STM32F7xxCanDriver;
+extern const CO_IF_CAN_DRV STM32F7xxCan2Driver;
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }

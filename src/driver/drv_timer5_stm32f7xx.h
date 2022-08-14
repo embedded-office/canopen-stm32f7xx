@@ -14,44 +14,27 @@
    limitations under the License.
 ******************************************************************************/
 
+#ifndef CO_TIMER5_STM32F7XX_H_
+#define CO_TIMER5_STM32F7XX_H_
+
+#ifdef __cplusplus               /* for compatibility with C++ environments  */
+extern "C" {
+#endif
+
 /******************************************************************************
 * INCLUDES
 ******************************************************************************/
 
-#include "clock_hw.h"
-#include "clock_app.h"
+#include "co_if.h"
 
 /******************************************************************************
-* PUBLIC VARIABLES
+* PUBLIC SYMBOLS
 ******************************************************************************/
 
-/* Select the drivers for your application. For possible
- * selections, see the directory /drivers.
- */
-struct CO_IF_DRV_T AppDriver = {
-    &STM32F7xxCan1Driver,
-    &STM32F7xxTimer5Driver,
-    &DummyNvmDriver
-};
+extern const CO_IF_TIMER_DRV STM32F7xxTimer5Driver;
 
-/******************************************************************************
-* PUBLIC FUNCTIONS
-******************************************************************************/
-
-/* ST HAL CAN receive interrupt callback */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-    /* process CAN frame with CANopen protocol */
-    if (hcan->Instance == CAN1) {
-        CONodeProcess(&Clk);
-    };
+#ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
+#endif
 
-/* ST HAL TIM5 overflow interrupt callback */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htmr)
-{
-    /* collect elapsed timed actions */
-    if (htmr->Instance == TIM5) {
-        COTmrService(&Clk.Tmr);
-    }
-}
+#endif

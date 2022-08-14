@@ -14,8 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef CO_TIMER_STM32F7XX_H_
-#define CO_TIMER_STM32F7XX_H_
+#ifndef CO_TIMER2_STM32F7XX_H_
+#define CO_TIMER2_STM32F7XX_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -31,7 +31,7 @@ extern "C" {
 * PUBLIC SYMBOLS
 ******************************************************************************/
 
-extern const CO_IF_TIMER_DRV STM32F7xxTimerDriver;
+extern const CO_IF_TIMER_DRV STM32F7xxTimer2Driver;
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
