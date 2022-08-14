@@ -151,7 +151,7 @@ static void DrvCanEnable(uint32_t baudrate)
         idx++;
     }
     if (baudrate != BaudrateTbl[idx].Baudrate) {
-        while(1) {;}      /* error not handled */
+        while(1);    /* error not handled */
     }
 
     /* can controller mode */

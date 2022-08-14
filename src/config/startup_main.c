@@ -53,15 +53,10 @@ void HAL_MspInit(void)            /* ST HAL lowlevel initialization callback */
 
 int main(void)                    /* main entry point for controller startup */
 {
-    HAL_Init();
-    SystemClock_Config();
+    HAL_Init();              /* initialize HAL, must be first call in main() */
+    SystemClock_Config();        /* setup clock tree to system clock: 216MHz */
 
-    /* GPIO Ports Clock Enable */
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    __HAL_RCC_GPIOH_CLK_ENABLE();
-
-    AppMain();                  /* ok, we are ready to start the application */
+    AppStart();                 /* ok, we are ready to start the application */
 }
 
 /******************************************************************************
@@ -91,13 +86,13 @@ static void SystemClock_Config(void)
     
     ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
     if (ret != HAL_OK) {
-        while(1);             /* error not handled */
+        while(1);    /* error not handled */
     }
     
     /* Activate the OverDrive to reach the 216 MHz Frequency */  
     ret = HAL_PWREx_EnableOverDrive();
     if (ret != HAL_OK) {
-        while(1);             /* error not handled */
+        while(1);    /* error not handled */
     }
     
     /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 clocks dividers */
@@ -109,6 +104,6 @@ static void SystemClock_Config(void)
 
     ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7);
     if (ret != HAL_OK) {
-        while(1);             /* error not handled */
+        while(1);    /* error not handled */
     }
 }

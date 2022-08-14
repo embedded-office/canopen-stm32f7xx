@@ -85,7 +85,7 @@ static void AppClock(void *p_arg)
 * PUBLIC FUNCTIONS
 ******************************************************************************/
 
-void AppMain(void)
+void AppStart(void)
 {
     uint32_t ticks;
 
@@ -94,7 +94,7 @@ void AppMain(void)
      */
     CONodeInit(&Clk, &AppSpec);
     if (CONodeGetErr(&Clk) != CO_ERR_NONE) {
-        while(1);
+        while(1);    /* error not handled */
     }
 
     /* Use CANopen software timer to create a cyclic function
@@ -110,8 +110,8 @@ void AppMain(void)
     CONodeStart(&Clk);
     CONmtSetMode(&Clk.Nmt, CO_OPERATIONAL);
 
-    /* In the background loop we process received CAN frames
-     * and executes elapsed action callback functions.
+    /* In the background loop we execute elapsed action
+     * callback functions.
      */
     while (1) {
         COTmrProcess(&Clk.Tmr);

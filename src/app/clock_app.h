@@ -37,7 +37,7 @@ extern CO_NODE Clk;
 * PUBLIC FUNCTIONS
 ******************************************************************************/
 
-void AppMain(void);
+void AppStart(void);
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
