@@ -33,16 +33,9 @@ static void SystemClock_Config(void);
 
 void _init(void) {;}         /* stub function, called in __libc_init_array() */
 
-HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)    /* Disable 1ms Tick */
+void SysTick_Handler(void)             /* ST HAL system tick as 1ms timebase */
 {
-    /* We can disable the regular 1ms time tick, because we use our timer
-     * driver to setup timer-actions with an accuracy of 1us.
-     *
-     * Unless we use one of the following HAL modules, the tick is unused:
-     * - hal_dsi, hal_eth, hal_mmc, hal_sd or ll_usb
-     */
-    (void)TickPriority;
-    return HAL_OK;
+    HAL_IncTick();
 }
 
 void HAL_MspInit(void)            /* ST HAL lowlevel initialization callback */
@@ -53,8 +46,8 @@ void HAL_MspInit(void)            /* ST HAL lowlevel initialization callback */
 
 int main(void)                    /* main entry point for controller startup */
 {
-    HAL_Init();              /* initialize HAL, must be first call in main() */
-    SystemClock_Config();        /* setup clock tree to system clock: 216MHz */
+    HAL_Init();                          /* must be the first call in main() */
+    SystemClock_Config();         /* setup the clock tree (activate the PLL) */
 
     AppStart();                 /* ok, we are ready to start the application */
 }
@@ -63,6 +56,11 @@ int main(void)                    /* main entry point for controller startup */
 * PRIVATE FUNCTIONS
 ******************************************************************************/
 
+/* This function is generated with STM32CubeMX with the default clock
+ * settings for the STM32F769 microcontroller. When you intend to port
+ * this example application to a different microcontroller, please
+ * don't forget to check (or re-create) this essential clock setup!
+ */
 static void SystemClock_Config(void)
 {
     RCC_ClkInitTypeDef RCC_ClkInitStruct;
@@ -78,12 +76,14 @@ static void SystemClock_Config(void)
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+
+    /* Input frequency HSE = 25MHz */
+    /* SYSCLK = ((HSE / 25) * 432) / 2 = 216 MHz */
     RCC_OscInitStruct.PLL.PLLM = 25;
     RCC_OscInitStruct.PLL.PLLN = 432;  
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
     RCC_OscInitStruct.PLL.PLLQ = 2;
-    RCC_OscInitStruct.PLL.PLLR = 2;  
-    
+    RCC_OscInitStruct.PLL.PLLR = 2;
     ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
     if (ret != HAL_OK) {
         while(1);    /* error not handled */

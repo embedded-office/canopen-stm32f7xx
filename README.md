@@ -11,12 +11,25 @@
 |  +- driver    : canopen target specific drivers
 ```
 
-# CANopen Quickstart
+# CANopen Demo for STM32F7xx Microcontrollers
 
-The CANopen quickstart application for the STM32F769 discovery board.
+This project demonstrates the usage of the free [CANopen Stack Project](https://canopen-stack.org). The included application is the Quickstart - "*CANopen clock application*", described in detail at the [project website](https://canopen-stack.org/latest/start/quickstart/).
 
-TODO: Explain, what is the application doing
+We use the [STM32Cube MCU Full Package for the STM32F7 series](https://github.com/STMicroelectronics/STM32CubeF7) made by ST Microelectronics as the low-level foundation for the chip configuration, the startup, and the driver implementation. With some slight enhancements to match our CMake build environment, we provide a small source code package out of a [forked repository](https://github.com/embedded-office/STM32CubeF7) for integration in our demo projects.
 
+My hardware setup for this development and testing is:
+- the [32F769IDISCOVERY Discovery kit](https://www.st.com/en/evaluation-tools/32f769idiscovery.html)
+- a CAN tranceiver [Waveshare SN65HVD230 CAN Board](https://www.waveshare.com/sn65hvd230-can-board.htm)
+- the [Saleae Logic Analyzer](https://www.saleae.com/) for low level measurements
+
+The wiring is pretty simple. For your reference, see the essence in a small diagram:
+
+![Collection of relevant hardware information](doc/image/discovery-can-connection.jpg)
+
+For details, check:
+- the [User Manual for Discovery kit with STM32F769NI MCU](https://www.st.com/resource/en/user_manual/um2033-discovery-kit-with-stm32f769ni-mcu-stmicroelectronics.pdf)
+- the [STM32F769xx Datasheet](https://www.st.com/resource/en/datasheet/stm32f769ni.pdf)
+- the [Reference Manual for STM32F76xxx MCUs](https://www.st.com/resource/en/reference_manual/dm00224583-stm32f76xxx-and-stm32f77xxx-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf)
 
 ## Usage
 
@@ -81,8 +94,8 @@ For the Ozone debugger there is a basic debugger configuration `debug/ozone.jdeb
 
 - power up your STM32F769 discovery board
 - double-click the debugger configuration
-- watch the uploading and running to main with wonder...
+- watch the uploading and running to main ...
 
-...and have fun playing with this tiny CANopen quickstart application :)
+... and have fun playing with this tiny CANopen quickstart application :)
 
-If you encounter any improvement in project setup, implementation or documentation, please rise an issue and help me to simplify the life of Embedded software engineers.
+If you encounter any improvement in descriptions, project setup, build system, implementation or documentation, please rise an issue and help me to simplify the life of Embedded software engineers.
