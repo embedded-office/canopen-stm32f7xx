@@ -40,8 +40,10 @@ void SysTick_Handler(void)             /* ST HAL system tick as 1ms timebase */
 
 void HAL_MspInit(void)            /* ST HAL lowlevel initialization callback */
 {
-    __HAL_RCC_PWR_CLK_ENABLE();
-    __HAL_RCC_SYSCFG_CLK_ENABLE();
+    __HAL_RCC_PWR_CLK_ENABLE();                                /* PWR Module */
+    __HAL_RCC_SYSCFG_CLK_ENABLE();                             /* SYS Module */
+    __HAL_RCC_GPIOA_CLK_ENABLE();                     /* PA13/14: SWD Debug  */
+    __HAL_RCC_GPIOH_CLK_ENABLE();                     /*   PH0/1: OSC_IN/OUT */
 }
 
 int main(void)                    /* main entry point for controller startup */
