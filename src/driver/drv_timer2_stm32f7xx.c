@@ -73,7 +73,9 @@ static void DrvTimerInit(uint32_t freq)
        - in other words we get a tick every: dt = 1us
        - with the timer width 32bit we get: max. time = 4294s (1h 11min 34s)
      */
-    (void)freq;
+    if (freq != 1000000) {
+        while(1);    /* see comments above */
+    };
 
     /* Peripheral clocks enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
