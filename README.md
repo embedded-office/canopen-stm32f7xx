@@ -20,6 +20,8 @@ We use the [STM32Cube MCU Full Package for the STM32F7 series](https://github.co
 My hardware setup for this development and testing is:
 - the [32F769IDISCOVERY Discovery kit](https://www.st.com/en/evaluation-tools/32f769idiscovery.html)
 - a CAN tranceiver [Waveshare SN65HVD230 CAN Board](https://www.waveshare.com/sn65hvd230-can-board.htm)
+- an Atmel [AT24C256 I2C EEPROM](https://www.microchip.com/en-us/product/AT24C256C)
+- the [KVaser USBcan II HS/HS](https://www.kvaser.com/product/kvaser-usbcan-ii-hshs/) for CAN bus monitoring
 - the [Saleae Logic Analyzer](https://www.saleae.com/) for low level measurements
 
 The wiring is pretty simple. For your reference, see the essence in a small diagram:
@@ -40,8 +42,9 @@ Download and install these free tools for your system:
 - Install the build tools [Cmake](https://cmake.org/)
 - Install the build system [Ninja](https://ninja-build.org/)
 - Install the cross-compiler [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
+- Install the [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) for uploading the program to the microcontroller.
 
-*Note: on my Windows machine, I use the [Ozone debugger](https://www.segger.com/downloads/jlink/) with the free [ST-Link Reflash Utility](https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/) from Segger. The generated debug information in the ELF image should be suitable for all other debuggers, too.*
+> *Note: during development, you can alternatively use the free evaluation [Ozone debugger](https://www.segger.com/downloads/jlink/) with the [ST-Link Reflash Utility](https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/) from Segger.*
 
 
 ### Submodule: cmake-scripts
