@@ -34,11 +34,8 @@ target_sources(canopen-stm32f7xx
     config/system_stm32f7xx.c
     # driver
     driver/drv_can1_stm32f7xx.c
-    driver/drv_can2_stm32f7xx.c
-    driver/drv_can3_stm32f7xx.c
-    driver/drv_nvm_dummy.c
+    driver/drv_nvm_i2c1_at24c256.c
     driver/drv_timer2_stm32f7xx.c
-    driver/drv_timer5_stm32f7xx.c
 )
 
 target_include_directories(canopen-stm32f7xx

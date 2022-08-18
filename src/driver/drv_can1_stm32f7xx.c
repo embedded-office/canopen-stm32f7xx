@@ -35,42 +35,34 @@ typedef struct BAUDRATE_TBL_T {
 
 typedef struct PIN_ASSIGN_T {
     GPIO_TypeDef *Port;
-    uint16_t      Pin; 
+    uint16_t      Pin;
+    uint8_t       Alternate;
 } PIN_ASSIGN;
 
 /******************************************************************************
 * PRIVATE DEFINES
 ******************************************************************************/
 
-/* default pin assignment: CAN_RX -> PB8, CAN_TX -> PB9 */
-#define CAN1_PIN_RX_SEL  1
-#define CAN1_PIN_TX_SEL  1
+/* default pin assignment: CAN_RX -> PA11, CAN_TX -> PA12 */
+#define CAN1_PIN_RX_SEL  0
+#define CAN1_PIN_TX_SEL  0
 
 /******************************************************************************
 * PRIVATE VARIABLES
 ******************************************************************************/
 
-/* All CAN Pin assignments are valid for: 
- *   STM32F722xx, STM32F723xx, STM32F730x8, STM32F732xx,
- *   STM32F733xx, STM32F745xx, STM32F746xx, STM32F750x8,
- *   STM32F756xx, STM32F765xx, STM32F767xx, STM32F768Ax,
- *   STM32F769xx, STM32F777xx, STM32F778Ax, STM32F779xx
- * 
- * Note: Pin assignment PH14 is not valid for:
- *   STM32F750x8, STM32F745xx, STM32F746xx
- */
 static PIN_ASSIGN Can1Pin_Rx[] = {
-    { GPIOA, GPIO_PIN_11 },  /* #0: PA11 */ 
-    { GPIOB, GPIO_PIN_8  },  /* #1: PB8  */ 
-    { GPIOD, GPIO_PIN_0  },  /* #2: PD0  */ 
-    { GPIOH, GPIO_PIN_14 },  /* #3: PH14 */
-    { GPIOI, GPIO_PIN_9  }   /* #4: PI9  */
+    { GPIOA, GPIO_PIN_11, GPIO_AF9_CAN1 },  /* #0: PA11 */ 
+    { GPIOB, GPIO_PIN_8,  GPIO_AF9_CAN1 },  /* #1: PB8  */ 
+    { GPIOD, GPIO_PIN_0,  GPIO_AF9_CAN1 },  /* #2: PD0  */ 
+    { GPIOH, GPIO_PIN_14, GPIO_AF9_CAN1 },  /* #3: PH14 */
+    { GPIOI, GPIO_PIN_9,  GPIO_AF9_CAN1 }   /* #4: PI9  */
 };
 static PIN_ASSIGN Can1Pin_Tx[] = {
-    { GPIOA, GPIO_PIN_12 },  /* #0: PA12 */
-    { GPIOB, GPIO_PIN_9  },  /* #2: PB9  */
-    { GPIOD, GPIO_PIN_1  },  /* #3: PD1  */
-    { GPIOH, GPIO_PIN_13 }   /* #4: PH13 */
+    { GPIOA, GPIO_PIN_12, GPIO_AF9_CAN1 },  /* #0: PA12 */
+    { GPIOB, GPIO_PIN_9,  GPIO_AF9_CAN1 },  /* #2: PB9  */
+    { GPIOD, GPIO_PIN_1,  GPIO_AF9_CAN1 },  /* #3: PD1  */
+    { GPIOH, GPIO_PIN_13, GPIO_AF9_CAN1 }   /* #4: PH13 */
 };
 
 static BAUDRATE_TBL BaudrateTbl[] = {
@@ -141,20 +133,18 @@ static void DrvCanInit(void)
     gpio.Mode      = GPIO_MODE_AF_PP;
     gpio.Pull      = GPIO_NOPULL;
     gpio.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-    gpio.Alternate = GPIO_AF9_CAN1;
+    gpio.Alternate = Can1Pin_Rx[CAN1_PIN_RX_SEL].Alternate;
     gpio.Pin       = Can1Pin_Rx[CAN1_PIN_RX_SEL].Pin;
     HAL_GPIO_Init(Can1Pin_Rx[CAN1_PIN_RX_SEL].Port, &gpio);
+    gpio.Alternate = Can1Pin_Tx[CAN1_PIN_TX_SEL].Alternate;
     gpio.Pin       = Can1Pin_Tx[CAN1_PIN_TX_SEL].Pin;
     HAL_GPIO_Init(Can1Pin_Tx[CAN1_PIN_TX_SEL].Port, &gpio);
-
-    /* CAN interrupt init */
-    HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
 }
 
 static void DrvCanEnable(uint32_t baudrate)
 {
     uint8_t idx = 0;
+    CAN_FilterTypeDef filter = {0};
 
     /* find the given baudrate in baudrate table */
     while (BaudrateTbl[idx].Baudrate != 0) {
@@ -185,6 +175,26 @@ static void DrvCanEnable(uint32_t baudrate)
     DrvCan1.Init.ReceiveFifoLocked    = DISABLE;
     DrvCan1.Init.TransmitFifoPriority = DISABLE;
     HAL_CAN_Init(&DrvCan1);
+
+    /* configure message filters */
+    filter.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+    filter.FilterIdHigh = 0;
+    filter.FilterIdLow = 0;
+    filter.FilterMaskIdHigh = 0;
+    filter.FilterMaskIdLow = 0;
+    filter.FilterScale = CAN_FILTERSCALE_32BIT;
+    filter.FilterActivation = ENABLE;
+    filter.FilterBank = 0;
+    filter.FilterMode = CAN_FILTERMODE_IDMASK;
+    filter.SlaveStartFilterBank = 14;
+    HAL_CAN_ConfigFilter(&DrvCan1, &filter);
+
+    /* configure CAN interrupt */
+    HAL_NVIC_SetPriority(CAN1_RX0_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(CAN1_RX0_IRQn);
+    HAL_CAN_ActivateNotification(&DrvCan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+
+    /* enable CAN bus */
     HAL_CAN_Start(&DrvCan1);
 }
 

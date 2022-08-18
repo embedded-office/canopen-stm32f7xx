@@ -25,12 +25,12 @@ extern "C" {
 * INCLUDES
 ******************************************************************************/
 
-#include "stm32f7xx_hal.h"                    /* for connecting interrupts   */
+#include "stm32f7xx_hal.h"                 /* for connecting interrupts      */
 
-                                              /* select application drivers: */
-#include "drv_can1_stm32f7xx.h"               /* CAN driver (CAN1)           */
-#include "drv_timer5_stm32f7xx.h"             /* Timer driver (TIM5)         */
-#include "drv_nvm_dummy.h"                    /* NVM driver                  */
+                                           /* select application drivers:    */
+#include "drv_can1_stm32f7xx.h"            /* CAN driver (CAN1)              */
+#include "drv_timer2_stm32f7xx.h"          /* Timer driver (TIM2)            */
+#include "drv_nvm_i2c1_at24c256.h"         /* NVM driver (AT24C256 via I2C1) */
 
 /******************************************************************************
 * PUBLIC SYMBOLS
