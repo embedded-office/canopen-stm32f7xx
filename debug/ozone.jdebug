@@ -28,10 +28,11 @@ void OnProjectLoad (void) {
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M7F.svd");
+  Project.AddSvdFile ("./STM32F769.svd");
   //
   // User settings
   //
-  File.Open ("../out/debug/quickstart-app.elf");
+  File.Open ("../out/debug/canopen-stm32f7xx");
 }
 
 /*********************************************************************

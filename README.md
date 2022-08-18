@@ -88,7 +88,7 @@ $ cmake --preset debug
 $ cmake --build ./build/debug
 ```
 
-The target image file `canopen-stm32f769.elf` and the corresponding map file `canopen-stm32f769.map` are generated and placed in `out/debug`.
+The target image file `canopen-stm32f7xx.elf` and the corresponding map file `canopen-stm32f7xx.map` are generated and placed in `out/debug`.
 
 
 ## Load and Executing on target

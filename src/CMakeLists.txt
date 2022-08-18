@@ -54,4 +54,4 @@ target_link_libraries(canopen-stm32f7xx canopen-stack stm32f7xx-hal)
 # specify the linker file and the resulting image
 #
 setLinkerScript(canopen-stm32f7xx "${CMAKE_CURRENT_SOURCE_DIR}/config/stm32f769i_discovery")
-setOutfile(canopen-stm32f7xx "quickstart-app")
+setOutfile(canopen-stm32f7xx "canopen-stm32f7xx")
