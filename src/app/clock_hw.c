@@ -47,7 +47,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     };
 }
 
-/* ST HAL TIM5 overflow interrupt callback */
+/* ST HAL TIM2 overflow interrupt callback */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htmr)
 {
     /* collect elapsed timed actions */
