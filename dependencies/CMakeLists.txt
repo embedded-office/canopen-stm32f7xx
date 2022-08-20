@@ -21,10 +21,9 @@ set(CO_TARGET   "canopen-stack")
 set(CO_PROJECT  "embedded-office/canopen-stack")
 set(CO_VERSION  "4.4.0")
 CPMAddPackage(
-  NAME              canopen-stack
-  GITHUB_REPOSITORY embedded-office/canopen-stack
-  VERSION           4.4.0
-  GIT_TAG           develop-type-modules
+  NAME    canopen-stack
+  URL     https://github.com/${CO_PROJECT}/releases/download/v${CO_VERSION}/${CO_TARGET}-src.zip
+  VERSION ${CO_VERSION}
 )
 
 #---
