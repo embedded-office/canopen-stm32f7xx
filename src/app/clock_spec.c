@@ -115,8 +115,7 @@ static uint8_t SdoSrvMem[CO_SSDO_N * CO_SDO_BUF_BYTE];
  * readability. You can use plain numbers, too.
  */
 static CO_EMCY_TBL AppEmcyTbl[APP_ERR_ID_NUM] = {
-    { CO_EMCY_REG_GENERAL, CO_EMCY_CODE_GEN_ERR          }, /* APP_ERR_CODE_SOMETHING */
-    { CO_EMCY_REG_TEMP   , CO_EMCY_CODE_TEMP_AMBIENT_ERR }  /* APP_ERR_CODE_HAPPENS   */
+    { CO_EMCY_REG_GENERAL, CO_EMCY_CODE_HW_ERR }    /* APP_ERR_ID_EEPROM */
 };
 
 /******************************************************************************
