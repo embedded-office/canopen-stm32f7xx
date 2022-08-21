@@ -35,8 +35,7 @@ typedef struct PIN_ASSIGN_T {
 * PRIVATE DEFINES
 ******************************************************************************/
 
-#define EEPROM_ADDRESS_RD  (uint16_t)0xA1 /* address of I2C device (reading) */
-#define EEPROM_ADDRESS_WR  (uint16_t)0xA0 /* address of I2C device (writing) */
+#define EEPROM_ADDRESS     (uint16_t)0xA0 /* address of I2C device bit 1..7  */
 #define EEPROM_TIMEOUT     (uint32_t)1000 /* timeout for each transfer: 1s   */
 #define EEPROM_PAGE_SIZE   (uint16_t)64   /* EEPROM page size                */
 #define EEPROM_ACK_POLLING 1000           /* retry on ack polling            */
@@ -145,7 +144,7 @@ static uint32_t DrvNvmRead(uint32_t start, uint8_t *buffer, uint32_t size)
     while (memSize > EEPROM_PAGE_SIZE) {
         err = HAL_I2C_Mem_Read(
             &DrvI2CBus,
-            EEPROM_ADDRESS_RD,
+            EEPROM_ADDRESS,
             memStart,
             I2C_MEMADD_SIZE_16BIT,
             memData,
@@ -161,7 +160,7 @@ static uint32_t DrvNvmRead(uint32_t start, uint8_t *buffer, uint32_t size)
     }
     err = HAL_I2C_Mem_Read(
         &DrvI2CBus,
-        EEPROM_ADDRESS_RD,
+        EEPROM_ADDRESS,
         memStart,
         I2C_MEMADD_SIZE_16BIT,
         memData,
@@ -190,7 +189,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
         (memPart > 0      )) {
         err = HAL_I2C_Mem_Write(
             &DrvI2CBus,
-            EEPROM_ADDRESS_WR,
+            EEPROM_ADDRESS,
             memStart,
             I2C_MEMADD_SIZE_16BIT,
             memData,
@@ -206,7 +205,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
         /* ACK polling during EEPROM internal write operations */
         err = HAL_I2C_IsDeviceReady(
             &DrvI2CBus,
-            EEPROM_ADDRESS_RD,
+            EEPROM_ADDRESS,
             EEPROM_ACK_POLLING,
             EEPROM_TIMEOUT);
         if (err != HAL_OK) {
@@ -218,7 +217,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
     while (memSize > EEPROM_PAGE_SIZE) {
         err = HAL_I2C_Mem_Write(
             &DrvI2CBus,
-            EEPROM_ADDRESS_WR,
+            EEPROM_ADDRESS,
             memStart,
             I2C_MEMADD_SIZE_16BIT,
             memData,
@@ -234,7 +233,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
         /* ACK polling during EEPROM internal write operations */
         err = HAL_I2C_IsDeviceReady(
             &DrvI2CBus,
-            EEPROM_ADDRESS_RD,
+            EEPROM_ADDRESS,
             EEPROM_ACK_POLLING,
             EEPROM_TIMEOUT);
         if (err != HAL_OK) {
@@ -246,7 +245,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
     if (memSize > 0) {
         err = HAL_I2C_Mem_Write(
             &DrvI2CBus,
-            EEPROM_ADDRESS_WR,
+            EEPROM_ADDRESS,
             memStart,
             I2C_MEMADD_SIZE_16BIT,
             memData,
@@ -259,7 +258,7 @@ static uint32_t DrvNvmWrite(uint32_t start, uint8_t *buffer, uint32_t size)
         /* ACK polling during EEPROM internal write operations */
         err = HAL_I2C_IsDeviceReady(
             &DrvI2CBus,
-            EEPROM_ADDRESS_RD,
+            EEPROM_ADDRESS,
             EEPROM_ACK_POLLING,
             EEPROM_TIMEOUT);
         if (err != HAL_OK) {
