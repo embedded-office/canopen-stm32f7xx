@@ -109,7 +109,7 @@ static void DrvTimerInit(uint32_t freq)
     /* clear pending update interrupt */
     __HAL_TIM_CLEAR_FLAG(&DrvTimer2, TIM_FLAG_UPDATE);
 
-    /* enable TIM5 interrupts */
+    /* enable TIM2 interrupts */
     HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM2_IRQn);
 }
