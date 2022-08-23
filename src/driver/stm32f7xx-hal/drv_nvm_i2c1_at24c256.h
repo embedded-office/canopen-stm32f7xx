@@ -14,8 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef CO_TIMER2_STM32F7XX_H_
-#define CO_TIMER2_STM32F7XX_H_
+#ifndef DRV_NVM_I2C1_AT24C256_H_
+#define DRV_NVM_I2C1_AT24C256_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -31,7 +31,7 @@ extern "C" {
 * PUBLIC SYMBOLS
 ******************************************************************************/
 
-extern const CO_IF_TIMER_DRV STM32F7xxTimer2Driver;
+extern const CO_IF_NVM_DRV STM32F7xx_I2C1_AT24C256_NvmDriver;
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }
