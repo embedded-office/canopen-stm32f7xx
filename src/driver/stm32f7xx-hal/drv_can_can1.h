@@ -14,8 +14,8 @@
    limitations under the License.
 ******************************************************************************/
 
-#ifndef DRV_NVM_I2C1_AT24C256_H_
-#define DRV_NVM_I2C1_AT24C256_H_
+#ifndef DRV_CAN_CAN1_H_
+#define DRV_CAN_CAN1_H_
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 extern "C" {
@@ -31,7 +31,7 @@ extern "C" {
 * PUBLIC SYMBOLS
 ******************************************************************************/
 
-extern const CO_IF_NVM_DRV I2C1_AT24C256NvmDriver;
+extern const CO_IF_CAN_DRV STM32F7xx_CAN1_CanDriver;
 
 #ifdef __cplusplus               /* for compatibility with C++ environments  */
 }

@@ -18,7 +18,7 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "drv_nvm_i2c1_at24C256.h"
+#include "drv_nvm_i2c1_at24c256.h"
 #include "stm32f7xx_hal.h"
 
 /******************************************************************************
@@ -71,7 +71,7 @@ static uint32_t DrvNvmWrite (uint32_t start, uint8_t *buffer, uint32_t size);
 * PUBLIC VARIABLE
 ******************************************************************************/
 
-const CO_IF_NVM_DRV I2C1_AT24C256NvmDriver = {
+const CO_IF_NVM_DRV STM32F7xx_I2C1_AT24C256_NvmDriver = {
     DrvNvmInit,
     DrvNvmRead,
     DrvNvmWrite

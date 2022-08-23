@@ -18,7 +18,7 @@
 * INCLUDES
 ******************************************************************************/
 
-#include "drv_can1_stm32f7xx.h"
+#include "drv_can_can1.h"
 #include "stm32f7xx_hal.h"
 
 /******************************************************************************
@@ -94,7 +94,7 @@ static void    DrvCanClose  (void);
 * PUBLIC VARIABLE
 ******************************************************************************/
 
-const CO_IF_CAN_DRV STM32F7xxCan1Driver = {
+const CO_IF_CAN_DRV STM32F7xx_CAN1_CanDriver = {
     DrvCanInit,
     DrvCanEnable,
     DrvCanRead,

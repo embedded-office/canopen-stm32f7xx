@@ -65,8 +65,8 @@ int main(void)                    /* main entry point for controller startup */
  */
 static void SystemClock_Config(void)
 {
-    RCC_ClkInitTypeDef RCC_ClkInitStruct;
-    RCC_OscInitTypeDef RCC_OscInitStruct;
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     HAL_StatusTypeDef ret = HAL_OK;
     
     /* Enable Power Control clock */

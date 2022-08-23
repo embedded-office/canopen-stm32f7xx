@@ -29,9 +29,9 @@
  * selections, see the directory /drivers.
  */
 struct CO_IF_DRV_T AppDriver = {
-    &STM32F7xxCan1Driver,
-    &STM32F7xxTimer2Driver,
-    &I2C1_AT24C256NvmDriver
+    &STM32F7xx_CAN1_CanDriver,
+    &STM32F7xx_TIM2_TimerDriver,
+    &STM32F7xx_I2C1_AT24C256_NvmDriver
 };
 
 /******************************************************************************
